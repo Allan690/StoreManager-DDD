@@ -20,7 +20,7 @@ func newFixtureUser() *entity.User {
 }
 
 func TestInmem_Create(t *testing.T) {
-	repo := newInMem()
+	repo := NewInMem()
 	m := NewService(repo)
 	u := newFixtureUser()
 	_, err := m.CreateUser(u.Email, u.Password, u.FirstName, u.LastName)
@@ -29,7 +29,7 @@ func TestInmem_Create(t *testing.T) {
 }
 
 func TestInmem_Update(t *testing.T) {
-	repo := newInMem()
+	repo := NewInMem()
 	m := NewService(repo)
 	u := newFixtureUser()
 	id, err := m.CreateUser(u.Email, u.Password, u.FirstName, u.LastName)
@@ -45,7 +45,7 @@ func TestInmem_Update(t *testing.T) {
 
 
 func TestInmem_Delete(t *testing.T) {
-	repo := newInMem()
+	repo := NewInMem()
 	m := NewService(repo)
 	u1 := newFixtureUser()
 	u2 := newFixtureUser()
@@ -59,7 +59,7 @@ func TestInmem_Delete(t *testing.T) {
 }
 
 func TestFindByEmail(t *testing.T) {
-	repo := newInMem()
+	repo := NewInMem()
 	m := NewService(repo)
 	u := newFixtureUser()
 	_, _ = m.CreateUser(u.Email, u.Password, u.FirstName, u.LastName)
@@ -69,7 +69,7 @@ func TestFindByEmail(t *testing.T) {
 }
 
 func TestFindByEmail_NotFound(t *testing.T) {
-	repo := newInMem()
+	repo := NewInMem()
 	m := NewService(repo)
 	u := newFixtureUser()
 	_, _ = m.CreateUser(u.Email, u.Password, u.FirstName, u.LastName)
@@ -79,7 +79,7 @@ func TestFindByEmail_NotFound(t *testing.T) {
 }
 
 func TestInmem_List(t *testing.T) {
-	repo := newInMem()
+	repo := NewInMem()
 	m := NewService(repo)
 	u := newFixtureUser()
 	u2 := newFixtureUser()

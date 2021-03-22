@@ -9,7 +9,7 @@ type inmem struct {
 	m map[entity.ID]*entity.User
 }
 
-func newInMem() *inmem {
+func NewInMem() *inmem {
 	var m = map[entity.ID]*entity.User{}
 	return &inmem{
 		m: m,
