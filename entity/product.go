@@ -3,6 +3,7 @@ package entity
 import (
 	"github.com/go-ozzo/ozzo-validation/v4"
 	"github.com/go-ozzo/ozzo-validation/v4/is"
+	"github.com/gofrs/uuid"
 	"time"
 )
 
@@ -17,10 +18,10 @@ type Product struct {
 	UpdatedAt time.Time
 }
 
-func NewProduct(userId ID, name, description string, price int) (*Product, error) {
+func NewProduct(userId uuid.UUID, name, description string, price int) (*Product, error) {
 	product := &Product{
-		ID:          NewID(),
-		User:        userId,
+		ID:          ID{NewID()},
+		User:        ID{userId},
 		Name:        name,
 		Description: description,
 		Price:       price,

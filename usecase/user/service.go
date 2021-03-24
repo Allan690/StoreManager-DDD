@@ -2,6 +2,7 @@ package user
 
 import (
 	"StoreManager-DDD/entity"
+	"github.com/gofrs/uuid"
 	"time"
 )
 
@@ -19,7 +20,7 @@ func NewService(r Repository) *Service {
 }
 
 // CreateUser handles creation of a user
-func (s *Service) CreateUser(email, password, firstName, lastName string)(entity.ID, error) {
+func (s *Service) CreateUser(email, password, firstName, lastName string)(uuid.UUID, error) {
 	u, err := entity.NewUser(email, password, firstName, lastName)
 	if err != nil {
 		return entity.NewID(), err
@@ -28,7 +29,7 @@ func (s *Service) CreateUser(email, password, firstName, lastName string)(entity
 }
 
 // GetUser handles getting a user by id
-func (s *Service) GetUser(id entity.ID) (*entity.User, error) {
+func (s *Service) GetUser(id uuid.UUID) (*entity.User, error) {
 	return s.repo.Get(id)
 }
 
@@ -44,7 +45,7 @@ func (s *Service) ListUsers() ([]*entity.User, error) {
 
 
 // DeleteUser handles deleting a user
-func (s *Service) DeleteUser(id entity.ID) error {
+func (s *Service) DeleteUser(id uuid.UUID) error {
 	user, err := s.GetUser(id)
 	if user == nil {
 		return entity.ErrNotFound

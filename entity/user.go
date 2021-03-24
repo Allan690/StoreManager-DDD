@@ -8,20 +8,20 @@ import (
 )
 
 type User struct {
-	ID ID
-	Email string
-	Password string
-	FirstName string
-	LastName string
-	CreatedAt time.Time
-	UpdatedAt time.Time
+	ID ID `bson:"_id" json:"id"`
+	Email string `bson:"email" json:"email"`
+	Password string `bson:"password" json:"password"`
+	FirstName string `bson:"first_name" json:"first_name"`
+	LastName string `bson:"last_name"   json:"last_name"`
+	CreatedAt time.Time `bson:"created_at"   json:"created_at"`
+	UpdatedAt time.Time `bson:"updated_at"   json:"updated_at"`
 }
 
 
 // NewUser creates a new user
 func NewUser(email, password, firstName, lastName string) (*User, error) {
 	user := &User{
-		ID:        NewID(),
+		ID:        ID{NewID()},
 		Email:     email,
 		FirstName: firstName,
 		LastName:  lastName,

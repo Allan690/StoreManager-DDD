@@ -1,10 +1,13 @@
 package user
 
-import "StoreManager-DDD/entity"
+import (
+	"StoreManager-DDD/entity"
+	"github.com/gofrs/uuid"
+)
 
 // Reader interface
 type Reader interface {
-	Get(id entity.ID) (*entity.User, error)
+	Get(id uuid.UUID) (*entity.User, error)
 	GetByEmail(email string) (*entity.User, error)
 	List()([]*entity.User, error)
 }
@@ -12,9 +15,9 @@ type Reader interface {
 
 // Writer interface
 type Writer interface {
-	Create(e *entity.User) (entity.ID, error)
+	Create(e *entity.User) (uuid.UUID, error)
 	Update(e *entity.User) error
-	Delete(id entity.ID) error
+	Delete(id uuid.UUID) error
 }
 
 // Repository interface
@@ -25,10 +28,10 @@ type Repository interface {
 
 // UseCase interface
 type UseCase interface {
-	GetUser(id entity.ID) (*entity.User, error)
+	GetUser(id uuid.UUID) (*entity.User, error)
 	GetUserByEmail(email string) (*entity.User, error)
 	ListUsers() ([]*entity.User, error)
-	CreateUser(email, password, firstName, lastName string) (entity.ID, error)
+	CreateUser(email, password, firstName, lastName string) (uuid.UUID, error)
 	UpdateUser(e *entity.User) error
-	DeleteUser(id entity.ID) error
+	DeleteUser(id uuid.UUID) error
 }

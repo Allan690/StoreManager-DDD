@@ -2,6 +2,7 @@ package entity_test
 
 import (
 	"StoreManager-DDD/entity"
+	"github.com/gofrs/uuid"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -16,8 +17,8 @@ func TestNewSale(t *testing.T) {
 
 func TestSale_Validate(t *testing.T) {
 	type test struct {
-		product entity.ID
-		user  entity.ID
+		product uuid.UUID
+		user  uuid.UUID
 		total int
 		want  error
 	}
