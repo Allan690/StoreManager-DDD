@@ -9,7 +9,7 @@ import (
 
 func newFixtureUser() *entity.User {
 	return &entity.User{
-		ID:        entity.NewID(),
+		ID:        entity.ID{UUID: entity.NewID()},
 		Email:     "test@test.com",
 		Password:  "123434",
 		FirstName: "Allan",
@@ -50,7 +50,7 @@ func TestInmem_Delete(t *testing.T) {
 	u1 := newFixtureUser()
 	u2 := newFixtureUser()
 	u2ID, _ := m.CreateUser(u2.Email, u2.Password, u2.FirstName, u2.LastName)
-	err := m.DeleteUser(u1.ID)
+	err := m.DeleteUser(u1.ID.UUID)
 	assert.Equal(t, entity.ErrNotFound, err)
 	err = m.DeleteUser(u2ID)
 	assert.Nil(t, err)

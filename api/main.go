@@ -13,7 +13,7 @@ import (
 	"net/http"
 )
 
-func SetupServer() *gin.Engine{
+func main() {
 	session, err := mgo.Dial(config.DB_HOST)
 	if err != nil {
 		log.Fatal(err.Error())
@@ -29,10 +29,7 @@ func SetupServer() *gin.Engine{
 		c.AbortWithStatus(http.StatusNotFound)
 	})
 	handler.MakeUserHandlers(router, userService)
-	return router
-}
-func main() {
-	err := SetupServer().Run(":8000")
+	err = router.Run(":8000")
 	if err != nil {
 		fmt.Print(err)
 		panic("An error occurred when running this application")

@@ -1,10 +1,11 @@
 package infrastructure
 
-import(
+import (
 	"StoreManager-DDD/config"
 	"StoreManager-DDD/entity"
 	"StoreManager-DDD/usecase/user"
 	"errors"
+	"fmt"
 	"github.com/gofrs/uuid"
 	"github.com/juju/mgosession"
 	"gopkg.in/mgo.v2/bson"
@@ -24,7 +25,7 @@ func (r repo) Get(id uuid.UUID) (*entity.User, error) {
 	result := entity.User{}
 	session := r.pool.Session(nil)
 	coll := session.DB(config.DB_NAME).C("user")
-	err := coll.Find(bson.M{"_id": &id}).One(&result)
+	err := coll.FindId(&entity.ID{UUID: id}).One(&result)
 	if err != nil {
 		return nil, err
 	}
@@ -46,7 +47,7 @@ func (r repo) List() ([]*entity.User, error) {
 	var userList []*entity.User
 	session := r.pool.Session(nil)
 	coll := session.DB(config.DB_NAME).C("user")
-	err := coll.Find(bson.M{}).All(userList)
+	err := coll.Find(bson.M{}).All(&userList)
 	if err != nil {
 		return nil, err
 	}
@@ -68,7 +69,14 @@ func (r repo) Create(e *entity.User) (uuid.UUID, error) {
 }
 
 func (r repo) Update(e *entity.User) error {
-	panic("implement me")
+	session := r.pool.Session(nil)
+	coll := session.DB(config.DB_NAME).C("user")
+	err := coll.UpdateId(e.ID, e)
+	if err != nil {
+		fmt.Println(err)
+		return errors.New("error occurred during update")
+	}
+	return nil
 }
 
 func (r repo) Delete(id uuid.UUID) error {

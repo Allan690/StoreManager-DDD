@@ -8,6 +8,7 @@ import (
 )
 
 type Sale struct {
+	ID ID
 	Product ID
 	User ID
 	Total int
@@ -18,6 +19,7 @@ type Sale struct {
 // NewSale create a new sale
 func NewSale(productId, userId uuid.UUID, total int) (*Sale, error) {
 	sale := &Sale{
+		ID: ID{NewID()},
 		Product:   ID{productId},
 		User:      ID{userId},
 		Total:     total,

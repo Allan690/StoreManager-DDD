@@ -3,6 +3,7 @@ package user
 import (
 	"StoreManager-DDD/entity"
 	"fmt"
+	"github.com/gofrs/uuid"
 )
 
 type inmem struct {
@@ -17,14 +18,14 @@ func NewInMem() *inmem {
 }
 
 //Create a user
-func (r *inmem) Create(e *entity.User) (entity.ID, error) {
+func (r *inmem) Create(e *entity.User) (uuid.UUID, error) {
 	r.m[e.ID] = e
-	return e.ID, nil
+	return e.ID.UUID, nil
 }
 
 // Update handles updating a user
 func (r *inmem) Update(e *entity.User) error {
-	_, err := r.Get(e.ID)
+	_, err := r.Get(e.ID.UUID)
 	if err != nil {
 		return err
 	}
@@ -33,11 +34,11 @@ func (r *inmem) Update(e *entity.User) error {
 }
 
 // Get a user by id
-func (r *inmem) Get(id entity.ID) (*entity.User, error) {
-	if r.m[id] == nil {
+func (r *inmem) Get(id uuid.UUID) (*entity.User, error) {
+	if r.m[entity.ID{UUID: id}] == nil {
 		return nil, entity.ErrNotFound
 	}
-	return r.m[id], nil
+	return r.m[entity.ID{UUID: id}], nil
 }
 
 //GetByEmail Get a user by email
@@ -60,11 +61,11 @@ func (r *inmem) List() ([]*entity.User, error) {
 }
 
 // Delete handles deletion of a user
-func (r *inmem) Delete(id entity.ID) error {
-	if r.m[id] == nil {
+func (r *inmem) Delete(id uuid.UUID) error {
+	if r.m[entity.ID{UUID: id}] == nil {
 		return fmt.Errorf("not found")
 	}
-	r.m[id] = nil
+	r.m[entity.ID{UUID: id}] = nil
 	return nil
 }
 
